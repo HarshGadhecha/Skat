@@ -1,0 +1,99 @@
+{
+  "app": {
+    "name": "Skat Scoreboard",
+    "tagline": "Keep track of your scores"
+  },
+  "common": {
+    "start": "Start",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "error": "Error"
+  },
+  "setup": {
+    "title": "New Game",
+    "playerNames": "Player Names",
+    "player": "Player {{number}}",
+    "enterName": "Enter name",
+    "startGame": "Start Game",
+    "minPlayers": "At least 3 players required"
+  },
+  "game": {
+    "scoreboard": "Scoreboard",
+    "newRound": "New Round",
+    "currentGame": "Current Game",
+    "totalScore": "Total Score",
+    "round": "Round {{number}}",
+    "endGame": "End Game",
+    "confirmEnd": "Are you sure you want to end the game?"
+  },
+  "round": {
+    "title": "Enter Round",
+    "declarer": "Declarer",
+    "selectDeclarer": "Select declarer",
+    "gameType": "Game Type",
+    "selectGameType": "Select game type",
+    "bidValue": "Bid Value",
+    "enterBidValue": "Enter bid value",
+    "hand": "Hand",
+    "schneider": "Schneider",
+    "schneiderAnnounced": "Schneider Announced",
+    "schwarz": "Schwarz",
+    "schwarzAnnounced": "Schwarz Announced",
+    "ouvert": "Ouvert",
+    "result": "Result",
+    "won": "Won",
+    "lost": "Lost",
+    "points": "Points",
+    "actualPoints": "Actual Points",
+    "addRound": "Add Round"
+  },
+  "gameTypes": {
+    "grand": "Grand",
+    "clubs": "Clubs",
+    "spades": "Spades",
+    "hearts": "Hearts",
+    "diamonds": "Diamonds",
+    "null": "Null",
+    "nullHand": "Null Hand",
+    "nullOuvert": "Null Ouvert",
+    "nullOuvertHand": "Null Ouvert Hand"
+  },
+  "history": {
+    "title": "Game History",
+    "noGames": "No games played yet",
+    "viewDetails": "View Details",
+    "deleteGame": "Delete Game",
+    "confirmDelete": "Are you sure you want to delete this game?"
+  },
+  "stats": {
+    "title": "Statistics",
+    "gamesPlayed": "Games Played",
+    "totalRounds": "Total Rounds",
+    "averageScore": "Average Score",
+    "highestScore": "Highest Score",
+    "lowestScore": "Lowest Score",
+    "winRate": "Win Rate"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "selectLanguage": "Select language",
+    "german": "Deutsch",
+    "english": "English",
+    "french": "Français",
+    "dutch": "Nederlands",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  }
+}

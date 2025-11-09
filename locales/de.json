@@ -1,0 +1,99 @@
+{
+  "app": {
+    "name": "Skat Punktetafel",
+    "tagline": "Behalten Sie die Punkte im Auge"
+  },
+  "common": {
+    "start": "Start",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "confirm": "Bestätigen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "done": "Fertig",
+    "close": "Schließen",
+    "yes": "Ja",
+    "no": "Nein",
+    "error": "Fehler"
+  },
+  "setup": {
+    "title": "Neues Spiel",
+    "playerNames": "Spielernamen",
+    "player": "Spieler {{number}}",
+    "enterName": "Name eingeben",
+    "startGame": "Spiel starten",
+    "minPlayers": "Mindestens 3 Spieler erforderlich"
+  },
+  "game": {
+    "scoreboard": "Punktetafel",
+    "newRound": "Neue Runde",
+    "currentGame": "Aktuelles Spiel",
+    "totalScore": "Gesamtpunkte",
+    "round": "Runde {{number}}",
+    "endGame": "Spiel beenden",
+    "confirmEnd": "Möchten Sie das Spiel wirklich beenden?"
+  },
+  "round": {
+    "title": "Runde eingeben",
+    "declarer": "Alleinspieler",
+    "selectDeclarer": "Alleinspieler wählen",
+    "gameType": "Spielart",
+    "selectGameType": "Spielart wählen",
+    "bidValue": "Reizwert",
+    "enterBidValue": "Reizwert eingeben",
+    "hand": "Hand",
+    "schneider": "Schneider",
+    "schneiderAnnounced": "Schneider angesagt",
+    "schwarz": "Schwarz",
+    "schwarzAnnounced": "Schwarz angesagt",
+    "ouvert": "Ouvert",
+    "result": "Ergebnis",
+    "won": "Gewonnen",
+    "lost": "Verloren",
+    "points": "Punkte",
+    "actualPoints": "Tatsächliche Punkte",
+    "addRound": "Runde hinzufügen"
+  },
+  "gameTypes": {
+    "grand": "Grand",
+    "clubs": "Kreuz",
+    "spades": "Pik",
+    "hearts": "Herz",
+    "diamonds": "Karo",
+    "null": "Null",
+    "nullHand": "Null Hand",
+    "nullOuvert": "Null Ouvert",
+    "nullOuvertHand": "Null Ouvert Hand"
+  },
+  "history": {
+    "title": "Spielverlauf",
+    "noGames": "Noch keine Spiele gespielt",
+    "viewDetails": "Details ansehen",
+    "deleteGame": "Spiel löschen",
+    "confirmDelete": "Möchten Sie dieses Spiel wirklich löschen?"
+  },
+  "stats": {
+    "title": "Statistiken",
+    "gamesPlayed": "Gespielte Spiele",
+    "totalRounds": "Gesamtrunden",
+    "averageScore": "Durchschnittspunkte",
+    "highestScore": "Höchste Punktzahl",
+    "lowestScore": "Niedrigste Punktzahl",
+    "winRate": "Gewinnrate"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "selectLanguage": "Sprache wählen",
+    "german": "Deutsch",
+    "english": "English",
+    "french": "Français",
+    "dutch": "Nederlands",
+    "theme": "Design",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System"
+  }
+}

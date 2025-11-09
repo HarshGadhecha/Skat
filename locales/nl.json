@@ -1,0 +1,99 @@
+{
+  "app": {
+    "name": "Skat Scorebord",
+    "tagline": "Houd uw scores bij"
+  },
+  "common": {
+    "start": "Start",
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "confirm": "Bevestigen",
+    "back": "Terug",
+    "next": "Volgende",
+    "done": "Klaar",
+    "close": "Sluiten",
+    "yes": "Ja",
+    "no": "Nee",
+    "error": "Fout"
+  },
+  "setup": {
+    "title": "Nieuw Spel",
+    "playerNames": "Spelernamen",
+    "player": "Speler {{number}}",
+    "enterName": "Naam invoeren",
+    "startGame": "Spel Starten",
+    "minPlayers": "Minstens 3 spelers vereist"
+  },
+  "game": {
+    "scoreboard": "Scorebord",
+    "newRound": "Nieuwe Ronde",
+    "currentGame": "Huidig Spel",
+    "totalScore": "Totale Score",
+    "round": "Ronde {{number}}",
+    "endGame": "Spel Beëindigen",
+    "confirmEnd": "Weet u zeker dat u het spel wilt beëindigen?"
+  },
+  "round": {
+    "title": "Ronde Invoeren",
+    "declarer": "Speler",
+    "selectDeclarer": "Speler selecteren",
+    "gameType": "Speltype",
+    "selectGameType": "Speltype selecteren",
+    "bidValue": "Biedwaarde",
+    "enterBidValue": "Biedwaarde invoeren",
+    "hand": "Hand",
+    "schneider": "Schneider",
+    "schneiderAnnounced": "Schneider aangekondigd",
+    "schwarz": "Schwarz",
+    "schwarzAnnounced": "Schwarz aangekondigd",
+    "ouvert": "Ouvert",
+    "result": "Resultaat",
+    "won": "Gewonnen",
+    "lost": "Verloren",
+    "points": "Punten",
+    "actualPoints": "Werkelijke punten",
+    "addRound": "Ronde Toevoegen"
+  },
+  "gameTypes": {
+    "grand": "Grand",
+    "clubs": "Klaveren",
+    "spades": "Schoppen",
+    "hearts": "Harten",
+    "diamonds": "Ruiten",
+    "null": "Null",
+    "nullHand": "Null Hand",
+    "nullOuvert": "Null Ouvert",
+    "nullOuvertHand": "Null Ouvert Hand"
+  },
+  "history": {
+    "title": "Spelgeschiedenis",
+    "noGames": "Nog geen spellen gespeeld",
+    "viewDetails": "Details Bekijken",
+    "deleteGame": "Spel Verwijderen",
+    "confirmDelete": "Weet u zeker dat u dit spel wilt verwijderen?"
+  },
+  "stats": {
+    "title": "Statistieken",
+    "gamesPlayed": "Gespeelde Spellen",
+    "totalRounds": "Totaal Rondes",
+    "averageScore": "Gemiddelde Score",
+    "highestScore": "Hoogste Score",
+    "lowestScore": "Laagste Score",
+    "winRate": "Winpercentage"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "language": "Taal",
+    "selectLanguage": "Taal selecteren",
+    "german": "Deutsch",
+    "english": "English",
+    "french": "Français",
+    "dutch": "Nederlands",
+    "theme": "Thema",
+    "light": "Licht",
+    "dark": "Donker",
+    "system": "Systeem"
+  }
+}

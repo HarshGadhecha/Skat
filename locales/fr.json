@@ -1,0 +1,99 @@
+{
+  "app": {
+    "name": "Tableau des Scores Skat",
+    "tagline": "Suivez vos scores"
+  },
+  "common": {
+    "start": "Démarrer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "confirm": "Confirmer",
+    "back": "Retour",
+    "next": "Suivant",
+    "done": "Terminé",
+    "close": "Fermer",
+    "yes": "Oui",
+    "no": "Non",
+    "error": "Erreur"
+  },
+  "setup": {
+    "title": "Nouvelle Partie",
+    "playerNames": "Noms des Joueurs",
+    "player": "Joueur {{number}}",
+    "enterName": "Entrer le nom",
+    "startGame": "Commencer la Partie",
+    "minPlayers": "Au moins 3 joueurs requis"
+  },
+  "game": {
+    "scoreboard": "Tableau des Scores",
+    "newRound": "Nouvelle Manche",
+    "currentGame": "Partie en Cours",
+    "totalScore": "Score Total",
+    "round": "Manche {{number}}",
+    "endGame": "Terminer la Partie",
+    "confirmEnd": "Êtes-vous sûr de vouloir terminer la partie?"
+  },
+  "round": {
+    "title": "Entrer la Manche",
+    "declarer": "Déclarant",
+    "selectDeclarer": "Sélectionner le déclarant",
+    "gameType": "Type de Jeu",
+    "selectGameType": "Sélectionner le type de jeu",
+    "bidValue": "Valeur d'Enchère",
+    "enterBidValue": "Entrer la valeur d'enchère",
+    "hand": "Main",
+    "schneider": "Schneider",
+    "schneiderAnnounced": "Schneider annoncé",
+    "schwarz": "Schwarz",
+    "schwarzAnnounced": "Schwarz annoncé",
+    "ouvert": "Ouvert",
+    "result": "Résultat",
+    "won": "Gagné",
+    "lost": "Perdu",
+    "points": "Points",
+    "actualPoints": "Points réels",
+    "addRound": "Ajouter la Manche"
+  },
+  "gameTypes": {
+    "grand": "Grand",
+    "clubs": "Trèfle",
+    "spades": "Pique",
+    "hearts": "Cœur",
+    "diamonds": "Carreau",
+    "null": "Null",
+    "nullHand": "Null Main",
+    "nullOuvert": "Null Ouvert",
+    "nullOuvertHand": "Null Ouvert Main"
+  },
+  "history": {
+    "title": "Historique des Parties",
+    "noGames": "Aucune partie jouée",
+    "viewDetails": "Voir les Détails",
+    "deleteGame": "Supprimer la Partie",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette partie?"
+  },
+  "stats": {
+    "title": "Statistiques",
+    "gamesPlayed": "Parties Jouées",
+    "totalRounds": "Manches Totales",
+    "averageScore": "Score Moyen",
+    "highestScore": "Score le Plus Élevé",
+    "lowestScore": "Score le Plus Bas",
+    "winRate": "Taux de Victoire"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": "Langue",
+    "selectLanguage": "Sélectionner la langue",
+    "german": "Deutsch",
+    "english": "English",
+    "french": "Français",
+    "dutch": "Nederlands",
+    "theme": "Thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  }
+}

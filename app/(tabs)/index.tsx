@@ -1,98 +1,207 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
+import { Picker } from '@react-native-picker/picker';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { useGame } from '@/context/GameContext';
+import { changeLanguage } from '../../i18n';
+import { SkatBannerAd } from '@/components/ads/BannerAd';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const { t, i18n } = useTranslation();
+  const router = useRouter();
+  const { currentGame, loadGame } = useGame();
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  const backgroundColor = useThemeColor({}, 'background');
+  const primaryColor = useThemeColor({}, 'tint');
+  const cardBackground = useThemeColor({}, 'card');
+  const borderColor = useThemeColor({}, 'border');
+
+  useEffect(() => {
+    loadGame();
+  }, []);
+
+  const handleLanguageChange = async (language: string) => {
+    setSelectedLanguage(language);
+    await changeLanguage(language);
+  };
+
+  const handleNewGame = () => {
+    router.push('/screens/SetupScreen');
+  };
+
+  const handleContinueGame = () => {
+    router.push('/screens/ScoreboardScreen');
+  };
+
+  return (
+    <ThemedView style={[styles.container, { backgroundColor }]}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.header}>
+          <ThemedText type="title" style={styles.title}>
+            {t('app.name')}
+          </ThemedText>
+          <ThemedText style={styles.tagline}>
+            {t('app.tagline')}
+          </ThemedText>
+        </View>
+
+        {/* Language Selector */}
+        <View style={styles.section}>
+          <ThemedText style={styles.sectionTitle}>
+            {t('settings.language')}
+          </ThemedText>
+          <View style={[styles.pickerContainer, { backgroundColor: cardBackground, borderColor }]}>
+            <Picker
+              selectedValue={selectedLanguage}
+              onValueChange={handleLanguageChange}
+              style={styles.picker}
+            >
+              <Picker.Item label="Deutsch" value="de" />
+              <Picker.Item label="English" value="en" />
+              <Picker.Item label="Français" value="fr" />
+              <Picker.Item label="Nederlands" value="nl" />
+            </Picker>
+          </View>
+        </View>
+
+        {/* Game Actions */}
+        <View style={styles.actionsContainer}>
+          <TouchableOpacity
+            style={[styles.button, styles.primaryButton, { backgroundColor: primaryColor }]}
+            onPress={handleNewGame}
+          >
+            <ThemedText style={styles.buttonText}>
+              {t('setup.title')}
+            </ThemedText>
+          </TouchableOpacity>
+
+          {currentGame && currentGame.isActive && (
+            <TouchableOpacity
+              style={[styles.button, styles.secondaryButton, { borderColor: primaryColor }]}
+              onPress={handleContinueGame}
+            >
+              <ThemedText style={[styles.buttonText, { color: primaryColor }]}>
+                {t('game.currentGame')}
+              </ThemedText>
+            </TouchableOpacity>
+          )}
+        </View>
+
+        {/* Info Section */}
+        <View style={[styles.infoCard, { backgroundColor: cardBackground, borderColor }]}>
+          <ThemedText style={styles.infoTitle}>
+            About Skat Scoreboard
+          </ThemedText>
+          <ThemedText style={styles.infoText}>
+            Track your Skat game scores easily with support for:
+          </ThemedText>
+          <View style={styles.featureList}>
+            <ThemedText style={styles.featureItem}>• All game types (Grand, Suit, Null)</ThemedText>
+            <ThemedText style={styles.featureItem}>• Hand, Schneider, Schwarz modifiers</ThemedText>
+            <ThemedText style={styles.featureItem}>• Automatic score calculation</ThemedText>
+            <ThemedText style={styles.featureItem}>• Game history tracking</ThemedText>
+            <ThemedText style={styles.featureItem}>• Multi-language support</ThemedText>
+          </View>
+        </View>
+
+        {/* AdMob Banner */}
+        <SkatBannerAd />
+      </ScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+  },
+  scrollContent: {
+    padding: 20,
+    paddingTop: 60,
+  },
+  header: {
     alignItems: 'center',
+    marginBottom: 40,
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  tagline: {
+    fontSize: 16,
+    textAlign: 'center',
+    opacity: 0.8,
+  },
+  section: {
+    marginBottom: 30,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 12,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  picker: {
+    height: 50,
+  },
+  actionsContainer: {
+    gap: 15,
+    marginBottom: 30,
+  },
+  button: {
+    height: 56,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  primaryButton: {
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  secondaryButton: {
+    borderWidth: 2,
+    backgroundColor: 'transparent',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  infoCard: {
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 20,
+    marginBottom: 20,
+  },
+  infoTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  infoText: {
+    fontSize: 15,
+    marginBottom: 15,
+    lineHeight: 22,
+  },
+  featureList: {
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  featureItem: {
+    fontSize: 14,
+    lineHeight: 20,
   },
 });
