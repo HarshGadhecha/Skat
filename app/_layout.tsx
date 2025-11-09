@@ -5,10 +5,12 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import '../i18n';
 import mobileAds from 'react-native-google-mobile-ads';
+import { Provider } from 'react-redux';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { GameProvider } from '@/context/GameContext';
 import { initializeAds } from '@/utils/ads';
+import { store } from '@/store';
 
 export const unstable_settings = {
   anchor: 'screens/SetupScreen',
@@ -31,17 +33,19 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <GameProvider>
-        <Stack>
-          <Stack.Screen name="screens/SetupScreen" options={{ headerShown: false }} />
-          <Stack.Screen name="screens/ScoreboardScreen" options={{ headerShown: false }} />
-          <Stack.Screen name="screens/AddRoundScreen" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-        </Stack>
-        <StatusBar style="auto" />
-      </GameProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <GameProvider>
+          <Stack>
+            <Stack.Screen name="screens/SetupScreen" options={{ headerShown: false }} />
+            <Stack.Screen name="screens/ScoreboardScreen" options={{ headerShown: false }} />
+            <Stack.Screen name="screens/AddRoundScreen" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+          </Stack>
+          <StatusBar style="auto" />
+        </GameProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
