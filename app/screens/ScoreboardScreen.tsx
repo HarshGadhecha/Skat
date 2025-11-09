@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Alert,
-  SafeAreaView,
-} from 'react-native';
-import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
-import { ThemedText } from '../../components/ThemedText';
-import { ThemedView } from '../../components/ThemedView';
-import { useGame } from '../../context/GameContext';
-import { useThemeColor } from '../../hooks/useThemeColor';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import { SkatBannerAd } from '../../components/ads/BannerAd';
+import { ThemedText } from '../../components/themed-text';
+import { ThemedView } from '../../components/themed-view';
+import { useGame } from '../../context/GameContext';
+import { useThemeColor } from '../../hooks/use-theme-color';
 
 export default function ScoreboardScreen() {
   const { t } = useTranslation();

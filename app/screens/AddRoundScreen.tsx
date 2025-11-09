@@ -1,22 +1,22 @@
+import { Picker } from '@react-native-picker/picker';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
-  View,
+  Alert,
+  ScrollView,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Alert,
+  View,
 } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { useRouter } from 'expo-router';
-import { Picker } from '@react-native-picker/picker';
-import { ThemedText } from '../../components/ThemedText';
-import { ThemedView } from '../../components/ThemedView';
+import { SkatBannerAd } from '../../components/ads/BannerAd';
+import { ThemedText } from '../../components/themed-text';
+import { ThemedView } from '../../components/themed-view';
 import { useGame } from '../../context/GameContext';
-import { useThemeColor } from '../../hooks/useThemeColor';
+import { useThemeColor } from '../../hooks/use-theme-color';
 import { GameType, RoundModifiers } from '../../types/game';
 import { getMinimumBid } from '../../utils/scoring';
-import { SkatBannerAd } from '../../components/ads/BannerAd';
 
 export default function AddRoundScreen() {
   const { t } = useTranslation();

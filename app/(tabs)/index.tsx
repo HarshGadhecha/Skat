@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { useRouter } from 'expo-router';
-import { Picker } from '@react-native-picker/picker';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { useThemeColor } from '@/hooks/useThemeColor';
-import { useGame } from '@/context/GameContext';
-import { changeLanguage } from '../../i18n';
 import { SkatBannerAd } from '@/components/ads/BannerAd';
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
+import { useGame } from '@/context/GameContext';
+import { useThemeColor } from '@/hooks/use-theme-color';
+import { Picker } from '@react-native-picker/picker';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { changeLanguage } from '../../i18n';
 
 export default function HomeScreen() {
   const { t, i18n } = useTranslation();
