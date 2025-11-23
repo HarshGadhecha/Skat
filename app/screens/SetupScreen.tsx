@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { ThemedText } from '../../components/themed-text';
 import { ThemedView } from '../../components/themed-view';
 import { useGame } from '../../context/GameContext';
@@ -25,7 +26,13 @@ export default function SetupScreen() {
   const backgroundColor = useThemeColor({}, 'background');
   const borderColor = useThemeColor({}, 'border');
   const inputBackground = useThemeColor({}, 'inputBackground');
-  const primaryColor = useThemeColor({}, 'tint');
+  const primaryColor = useThemeColor({}, 'primary');
+  const secondaryColor = useThemeColor({}, 'secondary');
+  const cardColor = useThemeColor({}, 'card');
+  const textColor = useThemeColor({}, 'text');
+  const gradient1 = useThemeColor({}, 'gradient1');
+  const gradient2 = useThemeColor({}, 'gradient2');
+  const gradient3 = useThemeColor({}, 'gradient3');
 
   const updatePlayerName = (index: number, name: string) => {
     const newNames = [...playerNames];
@@ -50,55 +57,91 @@ export default function SetupScreen() {
   };
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor }]}>
+    <LinearGradient
+      colors={[gradient1, gradient2, gradient3]}
+      style={styles.container}
+    >
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
       >
         <ScrollView contentContainerStyle={styles.scrollContent}>
-          <ThemedText type="title" style={styles.title}>
-            {t('setup.title')}
-          </ThemedText>
-
-          <ThemedText style={styles.subtitle}>
-            {t('setup.playerNames')}
-          </ThemedText>
-
-          {playerNames.map((name, index) => (
-            <View key={index} style={styles.inputContainer}>
-              <ThemedText style={styles.inputLabel}>
-                {t('setup.player', { number: index + 1 })}
-              </ThemedText>
-              <TextInput
-                style={[
-                  styles.input,
-                  {
-                    backgroundColor: inputBackground,
-                    borderColor,
-                    color: primaryColor,
-                  },
-                ]}
-                value={name}
-                onChangeText={(text) => updatePlayerName(index, text)}
-                placeholder={t('setup.enterName')}
-                placeholderTextColor="#999"
-                autoCapitalize="words"
-                returnKeyType={index < 2 ? 'next' : 'done'}
-              />
-            </View>
-          ))}
-
-          <TouchableOpacity
-            style={[styles.startButton, { backgroundColor: primaryColor }]}
-            onPress={handleStartGame}
-          >
-            <ThemedText style={styles.startButtonText}>
-              {t('setup.startGame')}
+          {/* Decorative header card */}
+          <View style={[styles.headerCard, { backgroundColor: cardColor, borderColor }]}>
+            <ThemedText type="title" style={[styles.title, { color: primaryColor }]}>
+              🎮 {t('setup.title')}
             </ThemedText>
+            <ThemedText style={[styles.subtitle, { color: textColor }]}>
+              {t('setup.playerNames')}
+            </ThemedText>
+          </View>
+
+          {/* Player input cards */}
+          <View style={styles.playersContainer}>
+            {playerNames.map((name, index) => {
+              const playerColors = [primaryColor, secondaryColor, '#FF006E'];
+              const accentColor = playerColors[index % playerColors.length];
+
+              return (
+                <View
+                  key={index}
+                  style={[
+                    styles.playerCard,
+                    {
+                      backgroundColor: cardColor,
+                      borderColor: accentColor,
+                      shadowColor: accentColor,
+                    }
+                  ]}
+                >
+                  <View style={[styles.playerBadge, { backgroundColor: accentColor }]}>
+                    <ThemedText style={styles.playerBadgeText}>
+                      P{index + 1}
+                    </ThemedText>
+                  </View>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      {
+                        backgroundColor: inputBackground,
+                        borderColor: accentColor,
+                        color: textColor,
+                      },
+                    ]}
+                    value={name}
+                    onChangeText={(text) => updatePlayerName(index, text)}
+                    placeholder={t('setup.enterName')}
+                    placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                    autoCapitalize="words"
+                    returnKeyType={index < 2 ? 'next' : 'done'}
+                  />
+                </View>
+              );
+            })}
+          </View>
+
+          {/* Start game button with gradient */}
+          <TouchableOpacity
+            onPress={handleStartGame}
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={[primaryColor, secondaryColor]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.startButton}
+            >
+              <ThemedText style={styles.startButtonText}>
+                ▶️ {t('setup.startGame')}
+              </ThemedText>
+            </LinearGradient>
           </TouchableOpacity>
+
+          {/* Add some bottom spacing */}
+          <View style={{ height: 40 }} />
         </ScrollView>
       </KeyboardAvoidingView>
-    </ThemedView>
+    </LinearGradient>
   );
 }
 
@@ -113,48 +156,86 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 60,
   },
+  headerCard: {
+    borderRadius: 20,
+    padding: 24,
+    marginBottom: 30,
+    borderWidth: 2,
+    elevation: 8,
+    shadowColor: '#00D4FF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+  },
   title: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 8,
     textAlign: 'center',
+    letterSpacing: 1,
   },
   subtitle: {
-    fontSize: 18,
-    marginBottom: 30,
-    textAlign: 'center',
-    opacity: 0.8,
-  },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  inputLabel: {
     fontSize: 16,
-    marginBottom: 8,
-    fontWeight: '600',
+    textAlign: 'center',
+    opacity: 0.9,
+  },
+  playersContainer: {
+    gap: 16,
+  },
+  playerCard: {
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 2,
+    elevation: 6,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  playerBadge: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  playerBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   input: {
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    fontSize: 16,
+    flex: 1,
+    height: 48,
+    borderWidth: 2,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    fontSize: 17,
+    fontWeight: '600',
   },
   startButton: {
-    height: 56,
-    borderRadius: 12,
+    height: 64,
+    borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 30,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    elevation: 8,
+    shadowColor: '#00D4FF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 12,
   },
   startButtonText: {
-    color: '#fff',
-    fontSize: 18,
+    color: '#FFFFFF',
+    fontSize: 22,
     fontWeight: 'bold',
+    letterSpacing: 1,
   },
 });
