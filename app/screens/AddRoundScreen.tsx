@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { SkatBannerAd } from '../../components/ads/BannerAd';
 import { ThemedText } from '../../components/themed-text';
 import { ThemedView } from '../../components/themed-view';
@@ -40,8 +41,15 @@ export default function AddRoundScreen() {
   const backgroundColor = useThemeColor({}, 'background');
   const borderColor = useThemeColor({}, 'border');
   const inputBackground = useThemeColor({}, 'inputBackground');
-  const primaryColor = useThemeColor({}, 'tint');
+  const primaryColor = useThemeColor({}, 'primary');
+  const secondaryColor = useThemeColor({}, 'secondary');
   const cardBackground = useThemeColor({}, 'card');
+  const textColor = useThemeColor({}, 'text');
+  const successColor = useThemeColor({}, 'success');
+  const errorColor = useThemeColor({}, 'error');
+  const gradient1 = useThemeColor({}, 'gradient1');
+  const gradient2 = useThemeColor({}, 'gradient2');
+  const gradient3 = useThemeColor({}, 'gradient3');
 
   if (!currentGame) {
     return (
@@ -81,20 +89,29 @@ export default function AddRoundScreen() {
   };
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor }]}>
+    <LinearGradient
+      colors={[gradient1, gradient2, gradient3]}
+      style={styles.container}
+    >
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <ThemedText type="title" style={styles.title}>
-          {t('round.title')}
-        </ThemedText>
+        {/* Header Card */}
+        <View style={[styles.headerCard, { backgroundColor: cardBackground, borderColor: primaryColor }]}>
+          <ThemedText type="title" style={[styles.title, { color: primaryColor }]}>
+            🎯 {t('round.title')}
+          </ThemedText>
+        </View>
 
         {/* Declarer Selection */}
-        <View style={styles.section}>
-          <ThemedText style={styles.label}>{t('round.declarer')}</ThemedText>
-          <View style={[styles.pickerContainer, { borderColor, backgroundColor: cardBackground }]}>
+        <View style={[styles.card, { backgroundColor: cardBackground, borderColor }]}>
+          <View style={[styles.labelBadge, { backgroundColor: primaryColor }]}>
+            <ThemedText style={styles.labelBadgeText}>👤 {t('round.declarer')}</ThemedText>
+          </View>
+          <View style={[styles.pickerContainer, { borderColor: primaryColor, backgroundColor: inputBackground }]}>
             <Picker
               selectedValue={declarerId}
               onValueChange={setDeclarerId}
-              style={styles.picker}
+              style={[styles.picker, { color: textColor }]}
+              dropdownIconColor={primaryColor}
             >
               <Picker.Item label={t('round.selectDeclarer')} value="" />
               {currentGame.players.map((player) => (
@@ -105,13 +122,16 @@ export default function AddRoundScreen() {
         </View>
 
         {/* Game Type Selection */}
-        <View style={styles.section}>
-          <ThemedText style={styles.label}>{t('round.gameType')}</ThemedText>
-          <View style={[styles.pickerContainer, { borderColor, backgroundColor: cardBackground }]}>
+        <View style={[styles.card, { backgroundColor: cardBackground, borderColor }]}>
+          <View style={[styles.labelBadge, { backgroundColor: secondaryColor }]}>
+            <ThemedText style={styles.labelBadgeText}>🃏 {t('round.gameType')}</ThemedText>
+          </View>
+          <View style={[styles.pickerContainer, { borderColor: secondaryColor, backgroundColor: inputBackground }]}>
             <Picker
               selectedValue={gameType}
               onValueChange={(value) => setGameType(value as GameType)}
-              style={styles.picker}
+              style={[styles.picker, { color: textColor }]}
+              dropdownIconColor={secondaryColor}
             >
               {gameTypes.map((type) => (
                 <Picker.Item
@@ -125,124 +145,153 @@ export default function AddRoundScreen() {
         </View>
 
         {/* Bid Value */}
-        <View style={styles.section}>
-          <ThemedText style={styles.label}>{t('round.bidValue')}</ThemedText>
+        <View style={[styles.card, { backgroundColor: cardBackground, borderColor }]}>
+          <View style={[styles.labelBadge, { backgroundColor: '#FFD23F' }]}>
+            <ThemedText style={styles.labelBadgeText}>💰 {t('round.bidValue')}</ThemedText>
+          </View>
           <TextInput
-            style={[styles.input, { backgroundColor: inputBackground, borderColor }]}
+            style={[styles.input, { backgroundColor: inputBackground, borderColor: '#FFD23F', color: textColor }]}
             value={bidValue}
             onChangeText={setBidValue}
             placeholder={`${getMinimumBid(gameType)}`}
             keyboardType="number-pad"
-            placeholderTextColor="#999"
+            placeholderTextColor="rgba(255, 255, 255, 0.4)"
           />
         </View>
 
         {/* Modifiers */}
         {!gameType.startsWith('null') && (
-          <View style={styles.section}>
-            <ThemedText style={styles.label}>Modifiers</ThemedText>
+          <View style={[styles.card, { backgroundColor: cardBackground, borderColor }]}>
+            <View style={[styles.labelBadge, { backgroundColor: '#FF6B35' }]}>
+              <ThemedText style={styles.labelBadgeText}>⚡ Modifiers</ThemedText>
+            </View>
             <View style={styles.modifierGrid}>
-              {Object.keys(modifiers).map((key) => (
-                <TouchableOpacity
-                  key={key}
-                  style={[
-                    styles.modifierButton,
-                    {
-                      backgroundColor: modifiers[key as keyof RoundModifiers]
-                        ? primaryColor
-                        : cardBackground,
-                      borderColor,
-                    },
-                  ]}
-                  onPress={() => toggleModifier(key as keyof RoundModifiers)}
-                >
-                  <ThemedText
-                    style={[
-                      styles.modifierText,
-                      { color: modifiers[key as keyof RoundModifiers] ? '#fff' : primaryColor },
-                    ]}
+              {Object.keys(modifiers).map((key) => {
+                const isActive = modifiers[key as keyof RoundModifiers];
+                return (
+                  <TouchableOpacity
+                    key={key}
+                    activeOpacity={0.7}
+                    onPress={() => toggleModifier(key as keyof RoundModifiers)}
                   >
-                    {t(`round.${key}`)}
-                  </ThemedText>
-                </TouchableOpacity>
-              ))}
+                    <LinearGradient
+                      colors={isActive
+                        ? [primaryColor, secondaryColor]
+                        : ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.05)']}
+                      style={[
+                        styles.modifierButton,
+                        { borderColor: isActive ? primaryColor : borderColor }
+                      ]}
+                    >
+                      <ThemedText
+                        style={[
+                          styles.modifierText,
+                          { color: isActive ? '#FFFFFF' : textColor },
+                        ]}
+                      >
+                        {isActive ? '✓ ' : ''}
+                        {t(`round.${key}`)}
+                      </ThemedText>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
           </View>
         )}
 
         {/* Result */}
-        <View style={styles.section}>
-          <ThemedText style={styles.label}>{t('round.result')}</ThemedText>
+        <View style={[styles.card, { backgroundColor: cardBackground, borderColor }]}>
+          <View style={[styles.labelBadge, { backgroundColor: '#B24BF3' }]}>
+            <ThemedText style={styles.labelBadgeText}>🎲 {t('round.result')}</ThemedText>
+          </View>
           <View style={styles.resultButtons}>
             <TouchableOpacity
-              style={[
-                styles.resultButton,
-                {
-                  backgroundColor: won ? '#4CAF50' : cardBackground,
-                  borderColor: won ? '#4CAF50' : borderColor,
-                },
-              ]}
+              activeOpacity={0.8}
               onPress={() => setWon(true)}
             >
-              <ThemedText style={[styles.resultText, { color: won ? '#fff' : primaryColor }]}>
-                {t('round.won')}
-              </ThemedText>
+              <LinearGradient
+                colors={won ? [successColor, '#00CC7A'] : ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.05)']}
+                style={[
+                  styles.resultButton,
+                  { borderColor: won ? successColor : borderColor }
+                ]}
+              >
+                <ThemedText style={[styles.resultText, { color: won ? '#FFFFFF' : textColor }]}>
+                  {won ? '✅ ' : ''}
+                  {t('round.won')}
+                </ThemedText>
+              </LinearGradient>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[
-                styles.resultButton,
-                {
-                  backgroundColor: !won ? '#F44336' : cardBackground,
-                  borderColor: !won ? '#F44336' : borderColor,
-                },
-              ]}
+              activeOpacity={0.8}
               onPress={() => setWon(false)}
             >
-              <ThemedText style={[styles.resultText, { color: !won ? '#fff' : primaryColor }]}>
-                {t('round.lost')}
-              </ThemedText>
+              <LinearGradient
+                colors={!won ? [errorColor, '#CC0055'] : ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.05)']}
+                style={[
+                  styles.resultButton,
+                  { borderColor: !won ? errorColor : borderColor }
+                ]}
+              >
+                <ThemedText style={[styles.resultText, { color: !won ? '#FFFFFF' : textColor }]}>
+                  {!won ? '❌ ' : ''}
+                  {t('round.lost')}
+                </ThemedText>
+              </LinearGradient>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Actual Points (Optional) */}
-        <View style={styles.section}>
-          <ThemedText style={styles.label}>
-            {t('round.actualPoints')} (Optional)
-          </ThemedText>
+        <View style={[styles.card, { backgroundColor: cardBackground, borderColor }]}>
+          <View style={[styles.labelBadge, { backgroundColor: '#00FF94' }]}>
+            <ThemedText style={styles.labelBadgeText}>📊 {t('round.actualPoints')} (Optional)</ThemedText>
+          </View>
           <TextInput
-            style={[styles.input, { backgroundColor: inputBackground, borderColor }]}
+            style={[styles.input, { backgroundColor: inputBackground, borderColor: '#00FF94', color: textColor }]}
             value={actualPoints}
             onChangeText={setActualPoints}
             placeholder="0-120"
             keyboardType="number-pad"
-            placeholderTextColor="#999"
+            placeholderTextColor="rgba(255, 255, 255, 0.4)"
           />
         </View>
 
-        {/* Submit Button */}
-        <TouchableOpacity
-          style={[styles.submitButton, { backgroundColor: primaryColor }]}
-          onPress={handleAddRound}
-        >
-          <ThemedText style={styles.submitButtonText}>
-            {t('round.addRound')}
-          </ThemedText>
-        </TouchableOpacity>
+        {/* Action Buttons */}
+        <View style={styles.actionButtons}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={handleAddRound}
+            style={{ flex: 1 }}
+          >
+            <LinearGradient
+              colors={[primaryColor, secondaryColor]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.submitButton}
+            >
+              <ThemedText style={styles.submitButtonText}>
+                ✅ {t('round.addRound')}
+              </ThemedText>
+            </LinearGradient>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={[styles.cancelButton, { borderColor: primaryColor }]}
-          onPress={() => router.back()}
-        >
-          <ThemedText style={[styles.cancelButtonText, { color: primaryColor }]}>
-            {t('common.cancel')}
-          </ThemedText>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.cancelButton, { borderColor: errorColor }]}
+            onPress={() => router.back()}
+            activeOpacity={0.8}
+          >
+            <ThemedText style={[styles.cancelButtonText, { color: errorColor }]}>
+              ❌ {t('common.cancel')}
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
 
         {/* AdMob Banner */}
         <SkatBannerAd />
       </ScrollView>
-    </ThemedView>
+    </LinearGradient>
   );
 }
 
@@ -253,15 +302,55 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 20,
     paddingTop: 60,
+    paddingBottom: 40,
+  },
+  headerCard: {
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 20,
+    borderWidth: 2,
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#00D4FF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 30,
-    textAlign: 'center',
+    letterSpacing: 1,
+  },
+  card: {
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    borderWidth: 2,
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+  },
+  labelBadge: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 12,
+    alignSelf: 'flex-start',
+    marginBottom: 12,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  labelBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 'bold',
   },
   section: {
-    marginBottom: 25,
+    marginBottom: 20,
   },
   label: {
     fontSize: 16,
@@ -269,19 +358,31 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   pickerContainer: {
-    borderWidth: 1,
-    borderRadius: 10,
+    borderWidth: 2,
+    borderRadius: 12,
     overflow: 'hidden',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   picker: {
-    height: 50,
+    height: 54,
+    fontSize: 16,
   },
   input: {
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    fontSize: 16,
+    height: 54,
+    borderWidth: 2,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    fontSize: 17,
+    fontWeight: '600',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   modifierGrid: {
     flexDirection: 'row',
@@ -289,59 +390,77 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   modifierButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 8,
-    borderWidth: 1,
-  },
-  modifierText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  resultButtons: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  resultButton: {
-    flex: 1,
-    height: 50,
-    borderRadius: 10,
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  resultText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  submitButton: {
-    height: 56,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
     borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
+    borderWidth: 2,
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
-  submitButtonText: {
-    color: '#fff',
-    fontSize: 18,
+  modifierText: {
+    fontSize: 14,
     fontWeight: 'bold',
   },
-  cancelButton: {
-    height: 50,
-    borderRadius: 10,
+  resultButtons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  resultButton: {
+    flex: 1,
+    height: 60,
+    borderRadius: 14,
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+  },
+  resultText: {
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+  actionButtons: {
+    gap: 12,
     marginTop: 10,
+  },
+  submitButton: {
+    height: 60,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#00D4FF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 12,
+  },
+  submitButtonText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+  },
+  cancelButton: {
+    height: 54,
+    borderRadius: 14,
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'transparent',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
   },
   cancelButtonText: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 'bold',
   },
 });

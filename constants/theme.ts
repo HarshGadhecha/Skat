@@ -1,35 +1,117 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Gaming-themed colors with vibrant dark mode palette
+ * Rich colors for an immersive Skat game experience
  */
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+// Vibrant gaming color palette
+const gameColors = {
+  // Primary accent colors - vibrant and lively
+  neonBlue: '#00D4FF',
+  neonPurple: '#B24BF3',
+  neonPink: '#FF006E',
+  neonGreen: '#00FF94',
+  neonOrange: '#FF6B35',
+  neonYellow: '#FFD23F',
+
+  // Rich gradients
+  gradientStart: '#1A0B2E',
+  gradientMid: '#2D1B4E',
+  gradientEnd: '#4A2C6D',
+
+  // Card suit colors
+  clubs: '#00D4FF',      // Bright cyan
+  spades: '#B24BF3',     // Vivid purple
+  hearts: '#FF006E',     // Hot pink
+  diamonds: '#FF6B35',   // Vivid orange
+
+  // Game state colors
+  win: '#00FF94',
+  loss: '#FF006E',
+  warning: '#FFD23F',
+
+  // Dark backgrounds
+  deepDark: '#0A0118',
+  darkPurple: '#1A0B2E',
+  richDark: '#16001E',
+  cardDark: '#251142',
+
+  // Glass-morphism effects
+  glassLight: 'rgba(255, 255, 255, 0.1)',
+  glassDark: 'rgba(0, 0, 0, 0.3)',
+};
+
+const tintColorLight = '#B24BF3';
+const tintColorDark = '#00D4FF';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
+    text: '#1A0B2E',
+    background: '#F8F7FF',
     tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
+    icon: '#6D28D9',
+    tabIconDefault: '#9333EA',
     tabIconSelected: tintColorLight,
-    border: '#ddd',
-    inputBackground: '#f5f5f5',
-    card: '#f9f9f9',
+    border: '#E9D5FF',
+    inputBackground: '#FFFFFF',
+    card: '#FFFFFF',
+    cardBorder: '#DDD6FE',
+    primary: '#B24BF3',
+    secondary: '#00D4FF',
+    accent: '#FF006E',
+    success: '#00FF94',
+    error: '#FF006E',
+    warning: '#FFD23F',
+    gradient1: '#E9D5FF',
+    gradient2: '#DBEAFE',
+    gradient3: '#FBCFE8',
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
+    text: '#FFFFFF',
+    background: gameColors.deepDark,
     tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
+    icon: '#00D4FF',
+    tabIconDefault: '#B24BF3',
     tabIconSelected: tintColorDark,
-    border: '#333',
-    inputBackground: '#222',
-    card: '#1e1e1e',
+    border: 'rgba(178, 75, 243, 0.3)',
+    inputBackground: gameColors.cardDark,
+    card: gameColors.cardDark,
+    cardBorder: 'rgba(0, 212, 255, 0.3)',
+
+    // Rich gaming colors
+    primary: '#00D4FF',
+    secondary: '#B24BF3',
+    accent: '#FF006E',
+    success: '#00FF94',
+    error: '#FF006E',
+    warning: '#FFD23F',
+
+    // Gradient colors for backgrounds
+    gradient1: gameColors.gradientStart,
+    gradient2: gameColors.gradientMid,
+    gradient3: gameColors.gradientEnd,
+
+    // Suit colors
+    clubs: gameColors.clubs,
+    spades: gameColors.spades,
+    hearts: gameColors.hearts,
+    diamonds: gameColors.diamonds,
+
+    // Glass-morphism
+    glass: gameColors.glassLight,
+    glassDark: gameColors.glassDark,
+
+    // Player rank colors
+    rank1: '#FFD700', // Gold
+    rank2: '#C0C0C0', // Silver
+    rank3: '#CD7F32', // Bronze
+
+    // Shadows and glows
+    shadowColor: '#000000',
+    glowPrimary: 'rgba(0, 212, 255, 0.5)',
+    glowSecondary: 'rgba(178, 75, 243, 0.5)',
+    glowAccent: 'rgba(255, 0, 110, 0.5)',
   },
 };
 
